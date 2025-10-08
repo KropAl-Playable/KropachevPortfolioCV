@@ -1,0 +1,223 @@
+---
+import Base from "../layouts/Base.astro";
+import cvru from "../data/cv_ru.json";
+
+const cv: any = cvru;
+
+// контакты
+const contacts = [cv?.meta?.email, cv?.meta?.linkedin, cv?.meta?.location].filter(Boolean);
+
+// возраст
+const birth = new Date("1994-02-10T00:00:00Z");
+const now = new Date();
+let age = now.getUTCFullYear() - birth.getUTCFullYear();
+const m = now.getUTCMonth() - birth.getUTCMonth();
+if (m < 0 || (m === 0 && now.getUTCDate() < birth.getUTCDate())) age--;
+
+const makeList = (arr?: any[]) => Array.isArray(arr) ? arr : [];
+---
+<Base title="CV · Kropachev Aleksei" lang="ru">
+  <section class="section">
+
+    <!-- Верхний блок: фото + профиль -->
+    <div class="split">
+      <div class="card overflow-hidden flex items-center justify-center h-40 sm:h-52 md:aspect-square">
+        <img src="/assets/photo.jpg" alt="Kropachev Aleksei portrait" class="w-full h-full object-cover" />
+      </div>
+
+      <div class="grid gap-6">
+        <section class="block reveal">
+          <!-- без заголовка карточки -->
+          <ul class="mt-1 text-sm text-textc-dim space-y-1">
+            {cv?.meta?.name && <li><strong class="text-textc">Имя:</strong> {cv.meta.name}</li>}
+            {cv?.meta?.title && <li><strong class="text-textc">Роль:</strong> {cv.meta.title}</li>}
+            <li><strong class="text-textc">Возраст:</strong> {age}</li>
+            {cv?.meta?.location && <li><strong class="text-textc">Локация:</strong> {cv.meta.location}</li>}
+          </ul>
+        </section>
+
+        {(cv?.meta?.email || cv?.meta?.location) && (
+  <section class="block reveal">
+    <h3 class="text-lg font-semibold mb-3">Контакты</h3>
+    <ul class="text-sm text-textc-dim space-y-2">
+      {cv?.meta?.email && (
+        <li class="flex items-center gap-2">
+          <!-- Письмо -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-brand-accent" viewBox="0 0 24 24" fill="none">
+            <path d="M3 5h18v14H3V5Zm0 0l9 7 9-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <a href={`mailto:${cv.meta.email}`} class="link" target="_blank" rel="noopener noreferrer">{cv.meta.email}</a>
+        </li>
+      )}
+
+      <!-- Telegram -->
+      <li class="flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-brand-accent" viewBox="0 0 24 24" fill="none">
+          <path d="M9.5 13.5l1 4 1.5-2 4.5 3 3.5-14-17 6.5 3.5 1 9-4-6.5 5.5z" fill="currentColor"/>
+        </svg>
+        <a href="https://t.me/potemkin_tg" class="link" target="_blank" rel="noopener noreferrer">Telegram</a>
+      </li>
+
+      {cv?.meta?.location && (
+        <li class="flex items-center gap-2">
+          <!-- Геометка -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-brand-accent" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2a7 7 0 0 1 7 7c0 5.25-7 13-7 13S5 14.25 5 9a7 7 0 0 1 7-7Zm0 9.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" fill="currentColor"/>
+          </svg>
+          <a
+            href="https://www.google.com/maps/place/%D0%9A%D0%B8%D1%80%D0%BE%D0%B2,+%D0%9A%D0%B8%D1%80%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F+%D0%BE%D0%B1%D0%BB.,+%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F/@58.5852591,49.4069319,11z/data=!3m1!4b1!4m6!3m5!1s0x43fcf680a90e78c1:0x6b282355c23fe067!8m2!3d58.6030012!4d49.6679437!16zL20vMDE1MXJs?entry=ttu&g_ep=EgoyMDI1MTAwNC4wIKXMDSoASAFQAw%3D%3D"
+            class="link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {cv.meta.location}
+          </a>
+        </li>
+      )}
+    </ul>
+  </section>
+)}
+
+
+      </div>
+    </div>
+
+    <!-- Опыт (первым) -->
+    {(Array.isArray(cv?.experience) && cv.experience.length > 0) && (
+      <section class="block mt-6 reveal">
+        <h3 class="text-lg font-semibold">Опыт</h3>
+        <div class="grid gap-4 mt-3">
+          {cv.experience.map((item:any) => (
+            <div class="card p-4">
+              <div class="flex flex-wrap items-baseline gap-2">
+                <div class="text-base font-semibold">{item.role ?? "—"}</div>
+                <div class="text-sm text-textc-mute">· {item.company ?? "—"}</div>
+                <div class="ml-auto text-xs text-textc-mute">{(item.start ?? "")} — {(item.end && item.end.trim() !== "" ? item.end : "Present")}</div>
+              </div>
+
+              {Array.isArray(item.responsibilities) && item.responsibilities.length > 0 && (
+                <div class="mt-3">
+                  <div class="text-sm font-medium">Задачи</div>
+                  <ul class="list-disc pl-5 text-sm text-textc-dim">
+                    {item.responsibilities.map((r:string) => <li>{r}</li>)}
+                  </ul>
+                </div>
+              )}
+
+              {Array.isArray(item.achievements) && item.achievements.length > 0 && (
+                <div class="mt-3">
+                  <div class="text-sm font-medium">Достижения</div>
+                  <ul class="list-disc pl-5 text-sm text-textc-dim">
+                    {item.achievements.map((a:string) => <li>{a}</li>)}
+                  </ul>
+                </div>
+              )}
+            </div>
+          ))}
+
+          {Array.isArray(cv?.earlier_experience) && cv.earlier_experience.length > 0 && (
+            <div class="card p-4">
+              <div class="text-base font-semibold mb-2">Ранний опыт</div>
+              <ul class="list-disc pl-5 text-sm text-textc-dim space-y-1">
+                {cv.earlier_experience.map((e:any) => (
+                  <li><span class="text-textc">{e.role}</span>, {e.company} — {e.period}. {e.notes}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      </section>
+    )}
+
+    <!-- Навыки (вторым) -->
+    {(cv?.skills) && (
+      <section class="block mt-6 reveal">
+        <h3 class="text-lg font-semibold">Навыки</h3>
+        <div class="grid md:grid-cols-2 gap-4 text-sm mt-3">
+          {cv?.skills?.playables && (
+            <div class="card p-4">
+              <div class="font-medium mb-2">Playables</div>
+              <ul class="list-disc pl-5 text-textc-dim">
+                {makeList(cv.skills.playables).map((s: string) => <li>{s}</li>)}
+              </ul>
+            </div>
+          )}
+          {cv?.skills?.art_and_ui && (
+            <div class="card p-4">
+              <div class="font-medium mb-2">Art & UI</div>
+              <ul class="list-disc pl-5 text-textc-dim">
+                {makeList(cv.skills.art_and_ui).map((s: string) => <li>{s}</li>)}
+              </ul>
+            </div>
+          )}
+          {cv?.skills?.tools && (
+            <div class="card p-4">
+              <div class="font-medium mb-2">Инструменты</div>
+              <ul class="list-disc pl-5 text-textc-dim">
+                {makeList(cv.skills.tools).map((s: string) => <li>{s}</li>)}
+              </ul>
+            </div>
+          )}
+          {cv?.skills?.analytics_and_pipeline && (
+            <div class="card p-4">
+              <div class="font-medium mb-2">Analytics & Pipeline</div>
+              <ul class="list-disc pl-5 text-textc-dim">
+                {makeList(cv.skills.analytics_and_pipeline).map((s: string) => <li>{s}</li>)}
+              </ul>
+            </div>
+          )}
+          {cv?.skills?.soft && (
+            <div class="card p-4">
+              <div class="font-medium mb-2">Soft skills</div>
+              <ul class="list-disc pl-5 text-textc-dim">
+                {makeList(cv.skills.soft).map((s: string) => <li>{s}</li>)}
+              </ul>
+            </div>
+          )}
+        </div>
+      </section>
+    )}
+
+    <!-- Образование / Курсы / Языки / Дополнительно -->
+    <div class="grid md:grid-cols-2 gap-6 mt-6">
+      {(Array.isArray(cv?.education) && cv.education.length > 0) && (
+        <section class="block">
+          <h3 class="text-lg font-semibold">Образование</h3>
+          <ul class="list-disc pl-5 text-sm text-textc-dim mt-3">
+            {cv.education.map((ed:any) => (
+              <li><span class="text-textc">{ed.institution}</span> — {ed.faculty}. {ed.notes}</li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {(Array.isArray(cv?.courses) && cv.courses.length > 0) && (
+        <section class="block reveal">
+          <h3 class="text-lg font-semibold">Курсы</h3>
+          <ul class="list-disc pl-5 text-sm text-textc-dim mt-3">
+            {cv.courses.map((c:string) => <li>{c}</li>)}
+          </ul>
+        </section>
+      )}
+
+      {(Array.isArray(cv?.languages) && cv.languages.length > 0) && (
+        <section class="block reveal">
+          <h3 class="text-lg font-semibold">Языки</h3>
+          <ul class="list-disc pl-5 text-sm text-textc-dim mt-3">
+            {cv.languages.map((l:any) => <li><span class="text-textc">{l.lang}</span> — {l.level}</li>)}
+          </ul>
+        </section>
+      )}
+
+      {cv?.additional?.availability && (
+        <section class="block reveal">
+          <h3 class="text-lg font-semibold">Дополнительно</h3>
+          <div class="text-sm text-textc-dim mt-3">
+            {cv.additional.availability}
+          </div>
+        </section>
+      )}
+    </div>
+
+  </section>
+</Base>

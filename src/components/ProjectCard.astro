@@ -1,0 +1,54 @@
+---
+export interface Props { project: any; isRussian?: boolean; }
+const { project, isRussian = true } = Astro.props;
+
+const desc: string = isRussian ? project?.description : (project?.description_en ?? project?.description ?? "");
+const cover: string =
+  (project?.cover && (project.cover.webp || project.cover.fallback))
+    ? (project.cover.webp || project.cover.fallback)
+    : (project?.cover?.fallback || "");
+const storeUrl: string | null =
+  project?.linkStoreAppStore ?? project?.linkStoreGoogle ?? project?.linkStore ?? null;
+const playableSrc: string | null = project?.playable?.src ?? project?.linkDemo ?? null;
+
+const dateIso = String(project?.date ?? "");
+---
+<article
+  class="card overflow-hidden group relative reveal"
+  data-date={dateIso}
+  data-genres={(project?.genres ?? []).join(',')}
+  data-tags={(project?.tags ?? []).join(',')}
+>
+  {cover && <img src={cover} alt={project?.title ?? ""} loading="lazy" decoding="async" class="cover" />}
+
+  <div class="p-4 pb-16">
+    <h3 class="text-lg font-semibold tracking-tight">{project?.title ?? "Untitled"}</h3>
+    {desc && <p class="text-sm text-textc-dim leading-relaxed mt-2">{desc}</p>}
+  </div>
+
+    <!-- Play слева, Store справа -->
+  {playableSrc && (
+    <button
+      type="button"
+      class="btn absolute bottom-4 left-4"
+      data-play-id={project?.id ?? ""}
+      data-play-src={playableSrc}
+      data-play-title={project?.title ?? "Playable"}
+      aria-label="Play demo"
+    >
+      ▶ Play
+    </button>
+  )}
+  {storeUrl && (
+    <a
+      href={storeUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn btn-primary absolute bottom-4 right-4"
+      aria-label="Open store page"
+    >
+      Store
+    </a>
+  )}
+</article>
+

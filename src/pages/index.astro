@@ -1,16 +1,69 @@
 ---
+import Base from "../layouts/Base.astro";
+import projectsData from "../data/projects.json";
+import cvru from "../data/cv_ru.json";
 
+const projects = projectsData.projects?.slice(0, 6) ?? [];
+const aboutShort: string = String(cvru?.summary ?? "");
 ---
+<Base title="Kropachev Aleksei — Senior Playable Ads Developer" lang="ru">
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+  <!-- HERO: фото слева + имя (mobile-first: компактная высота) -->
+  <section class="section">
+    <div class="split">
+      <!-- Фото: на мобиле фиксированная компактная высота, на md — квадрат -->
+      <div class="card overflow-hidden flex items-center justify-center h-40 sm:h-52 md:aspect-square">
+        <img src="/assets/photo.jpg" alt="Kropachev Aleksei portrait" class="w-full h-full object-cover" />
+      </div>
+
+      <!-- Имя и CTA -->
+      <div class="card p-5 md:p-6 reveal">
+        <h1 class="h1 text-[26px] sm:text-[30px] md:text-5xl">Kropachev Aleksei — Senior Playable Ads Developer</h1>
+        <div class="mt-4 md:mt-5 flex gap-3 flex-wrap">
+          <a href="/projects" class="btn btn-primary">View Projects</a>
+          <a href="/cv" class="btn btn-secondary">CV</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="section">
+    <div class="head">
+      <h2 class="h2">О себе</h2>
+    </div>
+    <div class="block reveal">
+
+      <p class="p whitespace-pre-line">{aboutShort}</p>
+    </div>
+  </section>
+
+    <!-- PROJECTS PREVIEW -->
+  <section class="section">
+    <div class="head">
+      <h2 class="h2">Проекты</h2>
+      <!-- убрали старую кнопку справа -->
+    </div>
+
+    <div class="content grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+      {projects.map(p => (
+        <a href="/projects" class="card overflow-hidden reveal">
+          {p?.cover && (p.cover.webp || p.cover.fallback)
+            ? <img src={(p.cover.webp || p.cover.fallback)} alt={p.title} class="cover" loading="lazy" decoding="async" />
+            : null}
+          <div class="p-4">
+            <div class="text-base font-medium">{p.title}</div>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <!-- Новая широкая кнопка под сеткой -->
+    <div class="mt-6">
+      <a href="/projects" class="btn btn-primary w-full justify-center text-base py-3">
+        Больше проектов →
+      </a>
+    </div>
+  </section>
+
+</Base>

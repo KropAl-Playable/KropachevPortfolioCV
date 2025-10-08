@@ -1,0 +1,83 @@
+---
+import Base from "../layouts/Base.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import PlayableModal from "../components/PlayableModal.astro";
+import data from "../data/projects.json";
+
+type Project = {
+  id?: string; title?: string; date?: string; cover?: any; genres?: string[]; tags?: string[];
+  linkStoreAppStore?: string; linkStoreGoogle?: string; linkStore?: string;
+  linkDemo?: string; playable?: { src?: string };
+  description?: string; description_en?: string;
+};
+
+const list: Project[] = Array.isArray((data as any).projects) ? (data as any).projects : [];
+const toTime = (v: unknown) => { const t = Date.parse(String(v||"")); return Number.isNaN(t) ? 0 : t; };
+const projects = [...list].sort((a,b)=> toTime(b.date)-toTime(a.date));
+
+// Массив для модалки
+const items = projects.map(p => ({
+  id: String(p.id ?? ''),
+  title: String(p.title ?? 'Playable'),
+  src: String(p.playable?.src ?? p.linkDemo ?? '')
+}));
+const sortOptions = [{ value: "new", label: "Новее" }, { value: "old", label: "Старше" }];
+const typeOptions = [{ value: "all", label: "Все" }, { value: "playable", label: "Playable" }, { value: "banner", label: "Banner" }];
+const dimOptions = [{ value: "all", label: "2D & 3D" }, { value: "3d", label: "3D" }, { value: "2d", label: "2D" }];
+---
+<Base title="Projects · Portfolio" lang="ru">
+  <section class="section">
+    <div class="head reveal">
+      <h1 class="h2">Проекты</h1>
+      <div class="flex gap-2 flex-wrap">
+        <label class="vhidden" for="sort">Сортировка</label>
+        <select id="sort" name="sort" class="btn bg-surface-2">
+          {sortOptions.map(o => <option value={o.value}>{o.label}</option>)}
+        </select>
+
+        <label class="vhidden" for="dim">Размерность</label>
+        <select id="dim" name="dim" class="btn bg-surface-2">
+          {dimOptions.map(o => <option value={o.value}>{o.label}</option>)}
+        </select>
+
+        <label class="vhidden" for="ptype">Тип</label>
+        <select id="ptype" name="ptype" class="btn bg-surface-2">
+          {typeOptions.map(o => <option value={o.value}>{o.label}</option>)}
+        </select>
+      </div>
+    </div>
+
+    <div id="grid" class="content grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+      {projects.map((p) => <ProjectCard project={p} />)}
+    </div>
+  </section>
+
+  <!-- Модалка проигрывателя (одна на страницу) -->
+  <PlayableModal items={items} />
+
+  <!-- Фильтры/сортировка (как раньше) -->
+  <script type="module">
+    const grid = document.getElementById('grid');
+    const sortSel = document.getElementById('sort');
+    const dimSel = document.getElementById('dim');
+    const typeSel = document.getElementById('ptype');
+    const cards = Array.from(grid.children);
+
+    function toTime(v){ const t = Date.parse(String(v||"")); return Number.isNaN(t)?0:t; }
+    function passDim(card, val){ if(val==='all')return true; const g=(card.getAttribute('data-genres')||'').toLowerCase(); if(val==='3d')return g.includes('3d'); if(val==='2d')return g.includes('2d'); return true; }
+    function passType(card,val){ if(val==='all')return true; const t=(card.getAttribute('data-tags')||'').toLowerCase(); const isPlayable = t.includes('playable')||t.includes('webgl')||t.includes('ecs')||t.includes('createjs'); return val==='playable'?isPlayable:!isPlayable; }
+
+    function apply(){
+      const s=sortSel.value, d=dimSel.value, t=typeSel.value;
+      const visible = cards.filter(c=> passDim(c,d) && passType(c,t));
+      const hidden = cards.filter(c=> !visible.includes(c));
+      hidden.forEach(c=> c.style.display='none'); visible.forEach(c=> c.style.display='');
+      visible.sort((a,b)=> s==='old' ? (toTime(a.dataset.date)-toTime(b.dataset.date)) : (toTime(b.dataset.date)-toTime(a.dataset.date)) )
+             .forEach(el=> grid.appendChild(el));
+    }
+    sortSel.addEventListener('change', apply);
+    dimSel.addEventListener('change', apply);
+    typeSel.addEventListener('change', apply);
+    apply();
+  </script>
+</Base>

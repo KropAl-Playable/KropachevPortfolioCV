@@ -1,0 +1,75 @@
+---
+import "../styles/tailwind.css";
+const { title = "Kropachev Aleksei — Senior Playable Ads Developer", lang = "ru" } = Astro.props;
+---
+<!doctype html>
+<html lang={lang} class="dark bg-surface text-textc font-ui">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="color-scheme" content="dark" />
+    <!-- favicon необязателен; уберём 404, создав пустышку -->
+    <link rel="icon" href="/favicon.ico" />
+    <!-- Noto Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body class="min-h-screen">
+    <header class="max-w-6xl mx-auto px-4 py-6 flex items-center justify-between">
+      <a href="/" class="text-textc font-semibold tracking-wide">Kropachev Aleksei</a>
+      <!-- Навигация иконками без текста -->
+      <nav class="flex gap-3">
+        <a class="iconbtn" href="/" aria-label="Home" title="Home">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-10.5Z" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </a>
+        <a class="iconbtn" href="/projects" aria-label="Projects" title="Projects">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M3 3h8v8H3V3Zm10 0h8v8h-8V3ZM3 13h8v8H3v-8Zm10 0h8v8h-8v-8Z" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </a>
+        <a class="iconbtn" href="/cv" aria-label="CV" title="CV">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="9" cy="12" r="2.5" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M13.5 9h5M13.5 12h5M13.5 15h4" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </a>
+      </nav>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 pb-12">
+      <slot />
+    </main>
+
+    <footer class="max-w-6xl mx-auto px-4 py-10 text-sm text-textc-dim">
+      <div class="h-px bg-surface-3 mb-6"></div>
+      © {new Date().getFullYear()} · Kropachev Aleksei · Senior Playable Ads Developer
+    </footer>
+    <script>
+    // Плавное появление блоков .reveal, по мере прокрутки + каскад сверху вниз
+    const els = Array.from(document.querySelectorAll('.reveal'));
+    const byTop = (a,b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top;
+
+    function show(el, i=0) {
+      // небольшая ступенчатая задержка (80мс * индекс), чтобы шли волной
+      const delay = Math.min(i * 80, 600);
+      setTimeout(() => el.classList.add('is-visible'), delay);
+    }
+
+    const io = 'IntersectionObserver' in window
+      ? new IntersectionObserver((entries) => {
+          entries.forEach((e) => { if (e.isIntersecting) { io.unobserve(e.target); e.target.dataset.idx && show(e.target, +e.target.dataset.idx); } });
+        }, { rootMargin: '0px 0px -10% 0px' })
+      : null;
+
+    els.sort(byTop).forEach((el, i) => {
+      el.dataset.idx = String(i);
+      if (io) io.observe(el); else show(el, i);
+    });
+  </script>
+  </body>
+</html>

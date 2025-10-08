@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html { color-scheme: dark; }
+html, body { background: #0B0F14; }
+
+/* Контейнеры/поверхности */
+.section { @apply mt-10; }
+.section > .head { @apply flex items-center justify-between mb-4; }
+.section > .content { @apply grid gap-6; }
+
+.card {
+  @apply rounded-2xl bg-surface-1 text-textc shadow-soft border border-surface-3 transition-transform;
+}
+.card:hover { transform: translateY(-2px); }
+
+.split {
+  @apply grid gap-6;
+}
+@media (min-width: 768px) {
+  .split { grid-template-columns: 280px 1fr; }
+}
+
+/* Кнопки */
+.btn { @apply inline-flex items-center justify-center gap-2 px-4 h-10 rounded-xl border border-surface-3 text-textc bg-surface-2 hover:bg-surface-3 transition; }
+.btn-primary { @apply bg-brand-accent text-surface font-medium border-transparent hover:brightness-95; }
+/* secondary (второй акцент) */
+.btn-secondary { @apply bg-brand-accent2 text-surface font-medium border-transparent hover:brightness-95; }
+
+/* Иконка-кнопка (nav) */
+.iconbtn { @apply inline-flex items-center justify-center w-10 h-10 rounded-xl border border-surface-3 bg-surface-2 hover:bg-surface-3; }
+
+/* Ссылки */
+.link { @apply text-brand-accent hover:underline; }
+
+/* Обложки карточек */
+.cover { @apply w-full h-44 md:h-48 object-cover bg-surface-2 border-b border-surface-3; }
+
+/* Типографика */
+.h1 { @apply text-3xl md:text-5xl font-semibold text-textc; }
+.h2 { @apply text-2xl font-semibold text-textc; }
+.p  { @apply text-base leading-relaxed text-textc-dim; }
+
+/* Визуальные разделители секций */
+.block {
+  @apply card p-6;
+}
+
+/* Утилиты */
+.vhidden { position:absolute; clip:rect(1px,1px,1px,1px); padding:0; border:0; height:1px; width:1px; overflow:hidden; white-space:nowrap; }
+
+/* Reveal animations (mobile-first), учитываем prefers-reduced-motion */
+.reveal { opacity: 0; transform: translateY(12px); transition: opacity .5s ease, transform .6s ease; }
+.reveal.is-visible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+.phone-glass::after{
+  content:""; position:absolute; inset:2px; border-radius:32px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.03);
+  pointer-events:none;
+}
