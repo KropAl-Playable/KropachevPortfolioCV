@@ -2,7 +2,7 @@ import { defineConfig } from 'astro/config';
 import tailwind from "@astrojs/tailwind";
 
 export default defineConfig({
-  site: 'https://kropal-playable.github.io', // ← замени на свой
-  base: '/',                               // по умолчанию и так '/', но пусть явно
+  site: 'https://kropal-playable.github.io',
+  base: '/',
   integrations: [tailwind({ applyBaseStyles: true })],
 });
