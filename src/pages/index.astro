@@ -7,8 +7,7 @@ const projects = projectsData.projects?.slice(0, 6) ?? [];
 const aboutShort: string = String(cvru?.summary ?? "");
 
 const base = import.meta.env.BASE_URL || '/';
-const withBase = (p?: string) =>
-  p && !/^https?:/i.test(p) ? (base + p.replace(/^\//, '')) : (p || '');
+const withBase = (p?: string) => p && !/^https?:/i.test(p) ? (base + p.replace(/^\//,'')) : (p || '');
 ---
 
 <Base title="Kropachev Aleksei — Senior Playable Ads Developer" lang="ru">
@@ -25,8 +24,9 @@ const withBase = (p?: string) =>
       <div class="card p-5 md:p-6 reveal">
         <h1 class="h1 text-[26px] sm:text-[30px] md:text-5xl">Kropachev Aleksei — Senior Playable Ads Developer</h1>
         <div class="mt-4 md:mt-5 flex gap-3 flex-wrap">
-          <a href="/projects" class="btn btn-primary">View Projects</a>
-          <a href="/cv" class="btn btn-secondary">CV</a>
+          <a href={base + 'projects'} class="btn btn-primary">View Projects</a>
+          <a href={base + 'cv'} class="btn btn-secondary">CV</a>
+
         </div>
       </div>
     </div>
@@ -52,7 +52,7 @@ const withBase = (p?: string) =>
 
     <div class="content grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
       {projects.map(p => (
-        <a href="/projects" class="card overflow-hidden reveal">
+        <a href={base + 'projects'} class="card overflow-hidden reveal">
           {p?.cover && (p.cover.webp || p.cover.fallback)
   ? <img src={withBase(p.cover.webp || p.cover.fallback)} alt={p.title} class="cover" loading="lazy" decoding="async" />
   : null}
@@ -66,7 +66,7 @@ const withBase = (p?: string) =>
 
     <!-- Новая широкая кнопка под сеткой -->
     <div class="mt-6">
-      <a href="/projects" class="btn btn-primary w-full justify-center text-base py-3">
+      <a href={base + 'projects'} class="btn btn-primary w-full justify-center text-base py-3 reveal">
         Больше проектов →
       </a>
     </div>
