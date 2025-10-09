@@ -10,9 +10,9 @@
   },
   "summary": "Senior Playable Ads Developer with 5+ years of experience in gamedev and adtech, combining hands-on production (Cocos Creator, CreateJS) with pipeline design, asset optimization and cross-functional leadership. Strong creative sensibility and player-first approach: I turn game assets and concepts into compact, high-quality interactive ads, build in-house production processes, and mentor teams to deliver repeatable results.",
   "skills": {
-    "playables": ["Cocos Creator", "TypeScript", "CreateJS / Adobe Animate"],
-    "art_and_ui": ["Blender (basic, asset optimization)", "Photoshop", "Frame-by-frame animation", "Sprite workflows"],
-    "tools": ["Figma (basic)", "Unity (basic)", "Unreal Engine 4 (basic)", "Miro (basic)"],
+    "playables": ["Cocos Creator (primary)", "TypeScript", "CreateJS", "PixiJS", "ThreeJS", "Webpack"],
+    "art_and_ui": ["Blender", "Photoshop", "Frame-by-frame animation", "Sprite workflows"],
+    "tools": ["Figma", "Miro", "Confluence", "Notion"],
     "analytics_and_pipeline": ["Creative metrics interpretation", "A/B test workflow", "In-house pipeline design", "Asset optimization for web"],
     "soft": ["Team leadership", "Mentoring", "Documentation & guides", "Cross-team communication", "Facilitation"]
   },
@@ -62,7 +62,7 @@
     },
     {
       "company": "Otklyk ADV",
-      "role": "HTML5 Designer / Junior Playable Developer",
+      "role": "HTML5 Designer → Junior Playable Developer",
       "start": "2020-09",
       "end": "2022-04",
       "responsibilities": [
@@ -73,7 +73,7 @@
         "Basic asset optimization to meet strict size and performance budgets."
       ],
       "achievements": [
-        "Delivered multiple interactive banners and playable proofs while consistently meeting size budgets.",
+        "Delivered 100+ interactive banners and playable ads while consistently meeting limits.",
         "Built competence in manual animation pipelines that later informed 3D transitions."
       ]
     }
@@ -91,7 +91,9 @@
     "Game Analytics — devtodev (2019)",
     "Basics of Figma (2020)",
     "Basics of Unreal Engine 4 (2020)",
-    "Unity Basics (2022)"
+    "Unity Basics (2022)",
+    "ThreeJS complete course (2023)",
+    "Making of 2D plarformer game on GODOT (2023)"
   ],
   "languages": [
     {"lang":"Russian","level":"Native"},
