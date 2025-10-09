@@ -10,7 +10,7 @@ const { title = "Kropachev Aleksei — Senior Playable Ads Developer", lang = "r
     <title>{title}</title>
     <meta name="color-scheme" content="dark" />
     <!-- favicon необязателен; уберём 404, создав пустышку -->
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" href={import.meta.env.BASE_URL + 'favicon.ico'} />
     <!-- Noto Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

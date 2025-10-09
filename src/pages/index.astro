@@ -5,7 +5,12 @@ import cvru from "../data/cv_ru.json";
 
 const projects = projectsData.projects?.slice(0, 6) ?? [];
 const aboutShort: string = String(cvru?.summary ?? "");
+
+const base = import.meta.env.BASE_URL || '/';
+const withBase = (p?: string) =>
+  p && !/^https?:/i.test(p) ? (base + p.replace(/^\//, '')) : (p || '');
 ---
+
 <Base title="Kropachev Aleksei — Senior Playable Ads Developer" lang="ru">
 
   <!-- HERO: фото слева + имя (mobile-first: компактная высота) -->
@@ -13,7 +18,7 @@ const aboutShort: string = String(cvru?.summary ?? "");
     <div class="split">
       <!-- Фото: на мобиле фиксированная компактная высота, на md — квадрат -->
       <div class="card overflow-hidden flex items-center justify-center h-40 sm:h-52 md:aspect-square">
-        <img src="/assets/photo.jpg" alt="Kropachev Aleksei portrait" class="w-full h-full object-cover" />
+        <img src={withBase('/assets/photo.jpg')} alt="Kropachev Aleksei portrait" class="w-full h-full object-cover" />
       </div>
 
       <!-- Имя и CTA -->
@@ -49,8 +54,9 @@ const aboutShort: string = String(cvru?.summary ?? "");
       {projects.map(p => (
         <a href="/projects" class="card overflow-hidden reveal">
           {p?.cover && (p.cover.webp || p.cover.fallback)
-            ? <img src={(p.cover.webp || p.cover.fallback)} alt={p.title} class="cover" loading="lazy" decoding="async" />
-            : null}
+  ? <img src={withBase(p.cover.webp || p.cover.fallback)} alt={p.title} class="cover" loading="lazy" decoding="async" />
+  : null}
+
           <div class="p-4">
             <div class="text-base font-medium">{p.title}</div>
           </div>
