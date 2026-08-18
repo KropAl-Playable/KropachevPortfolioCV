@@ -5,8 +5,9 @@
     "location": "Kirov, Russia (GMT+3)",
     "email": "alienhead891@gmail.com",
     "linkedin": "https://www.linkedin.com/in/yourprofile",
-    "version": "1.0",
-    "updated": "2025-10-01"
+    "birthDate": "1994-02-10",
+    "version": "1.1",
+    "updated": "2026-08-18"
   },
   "summary": "Playable Ads Developer with 5+ years of experience in gamedev and adtech. I combine hands-on playable production with building efficient pipelines, asset optimization, and cross-functional leadership. Known for a strong creative vision and a player-first mindset — I turn game assets and ideas into compact, technically solid interactive creatives, establish scalable workflows, and mentor teams to deliver high-performing results.",
   "skills": {
@@ -17,6 +18,36 @@
     "soft": ["Team leadership", "Mentorship", "Documentation & guidelines", "Cross-functional communication", "Facilitation"]
   },
   "experience": [
+    {
+      "company": "CGB Studio",
+      "role": "Senior Playable Ads Developer",
+      "start": "2026-01",
+      "end": "Present",
+      "responsibilities": [
+        "Develop and produce high-quality playable ads in Cocos Creator, with a strong focus on visual quality, interaction feel, and technical stability.",
+        "Create custom shaders and tailored graphics solutions in Cocos Creator for specific playable ad requirements.",
+        "Build internal QoL extensions for Cocos Creator to simplify repetitive workflows and everyday developer tasks.",
+        "Contribute to improving technical approaches and production practices for playable ad development across the team."
+      ],
+      "achievements": [
+        "Built several internal QoL extensions for Cocos Creator that are used by the team in day-to-day production.",
+        "Expanded the visual capabilities of playable projects through custom shaders and specialized graphics solutions."
+      ]
+    },
+    {
+      "company": "Freelance",
+      "role": "Playable Ads Developer",
+      "start": "2025-10",
+      "end": "2025-12",
+      "responsibilities": [
+        "Produced high-quality playable ads for freelance projects, with an emphasis on polished visuals and a finished interactive experience.",
+        "Handled playable ad development tasks independently and carried projects through to a production-ready result.",
+        "Balanced visual fidelity, responsive interaction, and the technical constraints of web advertising."
+      ],
+      "achievements": [
+        "Successfully delivered high-quality playable ad production in a freelance capacity."
+      ]
+    },
     {
       "company": "ChillBase",
       "role": "Team Lead, Playable Ads",
