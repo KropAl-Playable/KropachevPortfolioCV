@@ -5,8 +5,9 @@
     "location": "Киров, Россия (GMT+3)",
     "email": "alienhead891@gmail.com",
     "linkedin": "https://www.linkedin.com/in/yourprofile",
-    "version": "1.0",
-    "updated": "2025-10-01"
+    "birthDate": "1994-02-10",
+    "version": "1.1",
+    "updated": "2026-08-18"
   },
   "summary": "Разработчик Playable Ads с более чем 5-летним опытом в gamedev и adtech. Совмещаю практическое производство интерактивных креативов с выстраиванием пайплайнов, оптимизацией ассетов и управлением командой. Отличаюсь сильным креативным видением и подходом player-first: превращаю игровые идеи и ресурсы в лаконичные, технически грамотные playables, выстраиваю устойчивые процессы и обучаю команду работать эффективно.",
   "skills": {
@@ -17,6 +18,29 @@
     "soft": ["Управление командой", "Менторство", "Документирование и гайды", "Кросс-функциональное взаимодействие", "Фасилитация"]
   },
   "experience": [
+    {
+      "company": "CGB Studio",
+      "role": "Senior Playable Ads Developer",
+      "start": "2025-01",
+      "end": "н.в.",
+      "responsibilities": [
+        "Производство Playable Ads.",
+        "Разработка кастомных шейдеров для Cocos Creator.",
+        "Разработка QoL-расширений для Cocos Creator для использования командой."
+      ],
+      "achievements": [
+        "Разработал несколько QoL-расширений для Cocos Creator, используемых командой."
+      ]
+    },
+    {
+      "company": "Freelance",
+      "role": "Playable Ads Developer",
+      "start": "2025-10",
+      "end": "2025-12",
+      "responsibilities": [
+        "Производство High Quality Playable Ads."
+      ]
+    },
     {
       "company": "ChillBase",
       "role": "Team Lead Playable Ads",
