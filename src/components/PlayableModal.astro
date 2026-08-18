@@ -6,16 +6,20 @@ const itemsJson = JSON.stringify(items ?? []);
 ---
 
 <!-- Modal -->
-<div id="playable-modal" class="fixed inset-0 z-[100] hidden">
+<div
+  id="playable-modal"
+  class="fixed inset-0 z-[100] hidden overflow-y-auto overscroll-contain"
+  style="padding-top: max(0.5rem, env(safe-area-inset-top)); padding-right: max(0.5rem, env(safe-area-inset-right)); padding-bottom: max(0.5rem, env(safe-area-inset-bottom)); padding-left: max(0.5rem, env(safe-area-inset-left));"
+>
   <!-- backdrop -->
-  <div class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+  <div id="pm-backdrop" class="fixed inset-0 bg-black/70 backdrop-blur-sm"></div>
 
   <!-- panel -->
-  <div class="relative mx-auto w-full max-w-6xl h-[84vh] mt-8 card overflow-hidden border border-surface-3 reveal">
-    <!-- header -->
-    <div class="flex items-center justify-between px-4 py-3 border-b border-surface-3">
+  <div class="relative mx-auto w-full max-w-6xl h-[calc(100dvh-1rem)] max-h-[800px] card overflow-hidden border border-surface-3 reveal flex flex-col">
+    <!-- header: always remains visible inside the viewport -->
+    <div class="relative z-20 flex shrink-0 items-center justify-between px-4 py-3 border-b border-surface-3 bg-surface-1">
       <div id="pm-title" class="font-semibold text-textc truncate pr-2">Playable</div>
-      <div class="flex items-center gap-2">
+      <div class="flex shrink-0 items-center gap-2">
         <button id="pm-prev" class="iconbtn" title="Prev" aria-label="Prev">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         </button>
@@ -29,9 +33,9 @@ const itemsJson = JSON.stringify(items ?? []);
     </div>
 
     <!-- body -->
-    <div class="relative w-full h-[calc(84vh-56px)] bg-surface-2 grid place-items-center p-4 sm:p-6">
+    <div class="relative w-full flex-1 min-h-0 bg-surface-2 grid place-items-center p-2 sm:p-4 md:p-6 overflow-hidden">
       <!-- телефонная рамка -->
-      <div class="relative bg-black rounded-[36px] border border-surface-3 shadow-soft phone-glass" style="aspect-ratio: 9 / 17.5; height: min(92vw, 980px);">
+      <div class="relative bg-black rounded-[36px] border border-surface-3 shadow-soft phone-glass max-w-full max-h-full" style="aspect-ratio: 9 / 17.5; height: min(100%, 980px);">
 
         <!-- челка -->
         <div class="absolute left-1/2 -translate-x-1/2 top-0 h-6 w-32 rounded-b-2xl bg-black/90 border-x border-b border-surface-3"></div>
@@ -72,6 +76,7 @@ const itemsJson = JSON.stringify(items ?? []);
     const nextBtn  = document.getElementById('pm-next');
     const titleEl  = document.getElementById('pm-title');
     const loading  = document.getElementById('pm-loading');
+    const backdrop = document.getElementById('pm-backdrop');
 
     if (!iframe || !closeBtn || !prevBtn || !nextBtn || !titleEl || !loading) return;
 
@@ -100,6 +105,7 @@ const itemsJson = JSON.stringify(items ?? []);
       }
       // На ПК — модалка с рамкой
       modal.classList.remove('hidden');
+      modal.scrollTop = 0;
       lockScroll(true);
       loading.style.display = 'grid';
       titleEl.textContent = item.title || 'Playable';
@@ -137,7 +143,7 @@ const itemsJson = JSON.stringify(items ?? []);
     closeBtn.addEventListener('click', close);
     prevBtn.addEventListener('click', prev);
     nextBtn.addEventListener('click', next);
-    modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+    backdrop?.addEventListener('click', close);
 
     // Keys (только на десктопе)
     window.addEventListener('keydown', (e) => {
