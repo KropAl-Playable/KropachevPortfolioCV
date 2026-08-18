@@ -21,15 +21,17 @@
     {
       "company": "CGB Studio",
       "role": "Senior Playable Ads Developer",
-      "start": "2025-01",
+      "start": "2026-01",
       "end": "Present",
       "responsibilities": [
-        "Produced playable ads.",
-        "Developed custom shaders for Cocos Creator.",
-        "Developed QoL extensions for Cocos Creator for team use."
+        "Develop and produce high-quality playable ads in Cocos Creator, with a strong focus on visual quality, interaction feel, and technical stability.",
+        "Create custom shaders and tailored graphics solutions in Cocos Creator for specific playable ad requirements.",
+        "Build internal QoL extensions for Cocos Creator to simplify repetitive workflows and everyday developer tasks.",
+        "Contribute to improving technical approaches and production practices for playable ad development across the team."
       ],
       "achievements": [
-        "Built several QoL extensions for Cocos Creator used by the team."
+        "Built several internal QoL extensions for Cocos Creator that are used by the team in day-to-day production.",
+        "Expanded the visual capabilities of playable projects through custom shaders and specialized graphics solutions."
       ]
     },
     {
@@ -38,7 +40,12 @@
       "start": "2025-10",
       "end": "2025-12",
       "responsibilities": [
-        "Produced high-quality playable ads."
+        "Produced high-quality playable ads for freelance projects, with an emphasis on polished visuals and a finished interactive experience.",
+        "Handled playable ad development tasks independently and carried projects through to a production-ready result.",
+        "Balanced visual fidelity, responsive interaction, and the technical constraints of web advertising."
+      ],
+      "achievements": [
+        "Successfully delivered high-quality playable ad production in a freelance capacity."
       ]
     },
     {
