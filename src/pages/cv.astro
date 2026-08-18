@@ -9,8 +9,9 @@ const withBase = (p?: string) => p && !/^https?:/i.test(p) ? (base + p.replace(/
 // контакты
 const contacts = [cv?.meta?.email, cv?.meta?.linkedin, cv?.meta?.location].filter(Boolean);
 
-// возраст
-const birth = new Date("1994-02-10T00:00:00Z");
+// Возраст: серверный fallback для HTML. На клиенте значение пересчитывается при загрузке страницы.
+const birthDate = cv?.meta?.birthDate || "1994-02-10";
+const birth = new Date(`${birthDate}T00:00:00Z`);
 const now = new Date();
 let age = now.getUTCFullYear() - birth.getUTCFullYear();
 const m = now.getUTCMonth() - birth.getUTCMonth();
@@ -33,7 +34,7 @@ const makeList = (arr?: any[]) => Array.isArray(arr) ? arr : [];
           <ul class="mt-1 text-sm text-textc-dim space-y-1">
             {cv?.meta?.name && <li><strong class="text-textc">Имя:</strong> {cv.meta.name}</li>}
             {cv?.meta?.title && <li><strong class="text-textc">Роль:</strong> {cv.meta.title}</li>}
-            <li><strong class="text-textc">Возраст:</strong> {age}</li>
+            <li><strong class="text-textc">Возраст:</strong> <span id="cv-age" data-birth-date={birthDate}>{age}</span></li>
             {cv?.meta?.location && <li><!-- Геометка -->
             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-brand-accent" viewBox="0 0 24 24" fill="none">
               <path d="M12 2a7 7 0 0 1 7 7c0 5.25-7 13-7 13S5 14.25 5 9a7 7 0 0 1 7-7Zm0 9.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" fill="currentColor"/>
@@ -217,4 +218,24 @@ const makeList = (arr?: any[]) => Array.isArray(arr) ? arr : [];
     </div>
 
   </section>
+
+  <script is:inline>
+    (() => {
+      const ageEl = document.getElementById('cv-age');
+      const birthDate = ageEl?.getAttribute('data-birth-date');
+      if (!ageEl || !birthDate) return;
+
+      const [year, month, day] = birthDate.split('-').map(Number);
+      if (!year || !month || !day) return;
+
+      const today = new Date();
+      let currentAge = today.getFullYear() - year;
+      const birthdayPassed =
+        today.getMonth() + 1 > month ||
+        (today.getMonth() + 1 === month && today.getDate() >= day);
+
+      if (!birthdayPassed) currentAge--;
+      ageEl.textContent = String(currentAge);
+    })();
+  </script>
 </Base>
